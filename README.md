@@ -1,7 +1,6 @@
-*Open de app en druk op `?` om deze tekst in jouw taal te zien.*  
-*Open the app and press `?` to see this text in your language.*  
-*Ouvrez l'application et appuyez sur `?` pour voir ce texte dans votre langue.*  
-*Öffne die App und drücke `?`, um diesen Text in deiner Sprache zu sehen.*
+*Open the [app](https://deningenieur.github.io/dwd/) and press `?` to see this text in your language.*  
+*Ouvrez [l'application](https://deningenieur.github.io/dwd/) et appuyez sur `?` pour voir ce texte dans votre langue.*  
+*Öffne die [App](https://deningenieur.github.io/dwd/) und drücke `?`, um diesen Text in deiner Sprache zu sehen.*
 
 ---
 
