@@ -1,0 +1,36 @@
+Ein Tag – ein Wort – ein Tag
+
+Was ist das?
+Schreibe ein Wort pro Tag. Keine Bearbeitung. Kein Löschen. Jedes Wort ist dauerhaft.
+
+Farben:
+Jedes Wort hat seine eigene Farbe. Wie? Das ist das Geheimnis.
+
+Tasten:
+📅 Kalender - Wähle ein Datum. Wenn du an diesem Tag kein Wort geschrieben hast,
+           springt zum nächsten Tag mit einem Wort.
+📂⬇️ Importieren - Stellt Wörter aus JSON-Backup wieder her.
+           WARNUNG: Dies ERSETZT alles, was sich derzeit in Ihrem Tagebuch befindet.
+           Wörter, die nicht in der Backup-Datei sind, sind für immer verloren.
+💾⬆️ Exportieren - Lädt alle Wörter als JSON herunter.
+           Tun Sie dies regelmäßig. Ihr Tagebuch lebt nur in Ihrem Browser.
+🏠 Heute - Zurück zu heute.
+❓ Hilfe - Öffnet dieses Hilfefenster.
+
+Verlaufstasten (10, 20, 50, 100, 200, ∞):
+Zeigt vergangene Wörter. Der Hintergrund wird die Durchschnittsfarbe dieser Wörter.
+Ein farbiger Streifen zeigt die Zeitleiste.
+
+Untere Leiste:
+Letzte 5 Wörter. Klicke, um zu diesem Wort zu springen.
+
+Philosophie:
+Einmal geschrieben, bleibt es. Du denkst, bevor du schreibst.
+Exportieren Sie Ihr Tagebuch regelmäßig. Browser vergessen. Computer gehen kaputt.
+Dinge gehen verloren. Das ist das Leben.
+
+Technisch:
+Alle Daten bleiben in deinem Browser. Keine Cloud, kein Tracking, kein Login.
+WARNUNG: Das Löschen deiner Browserdaten löscht dein Tagebuch.
+WARNUNG: Das Importieren einer JSON-Datei überschreibt alles.
+Exportieren Sie regelmäßig. Bewahren Sie Backups an verschiedenen Orten auf.

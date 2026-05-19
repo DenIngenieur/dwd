@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>a day - a word - a day</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- TOP BAR - Row 1: Icons -->
+    <div class="top-bar top-bar-icons">
+      <button class="icon-btn" id="calendar-btn" title="Calendar">📅</button>
+      <button class="icon-btn" id="import-btn" title="Import">📂⬇️</button>
+      <button class="icon-btn" id="export-btn" title="Export">💾⬆️</button>
+      <button class="icon-btn" id="today-btn" title="Today">🏠</button>
+      <button class="icon-btn" id="help-btn" title="Help">❓</button>
+    </div>
+
+    <!-- TOP BAR - Row 2: History buttons (hidden by default, shown as unlocked) -->
+    <div class="top-bar top-bar-history" id="history-buttons">
+      <button class="history-btn" data-range="10">10</button>
+      <button class="history-btn" data-range="20">20</button>
+      <button class="history-btn" data-range="50">50</button>
+      <button class="history-btn" data-range="100">100</button>
+      <button class="history-btn" data-range="200">200</button>
+      <button class="history-btn" data-range="all">∞</button>
+    </div>
+
+    <!-- MAIN CONTENT: Centered card -->
+    <div class="main-content">
+      <div class="card" id="main-card">
+        <!-- Input mode (shown when no word for today) -->
+        <div id="input-mode" class="mode-container">
+          <input type="text" id="word-input" class="word-input" autocomplete="off">
+          <button id="submit-btn" class="submit-btn">✓</button>
+        </div>
+        
+        <!-- View mode (shown when viewing an entry) -->
+        <div id="view-mode" class="mode-container" style="display: none;">
+          <div class="word-display" id="word-display"></div>
+          <div class="date-display" id="date-display"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM BAR: Last 5 entries -->
+    <div class="bottom-bar" id="bottom-bar">
+      <!-- Dynamically filled with last 5 entries -->
+    </div>
+
+  </div>
+
+  <!-- HELP MODAL (hidden by default) -->
+  <dialog id="help-modal" class="help-modal">
+    <div class="modal-header">
+      <h2>a day - a word - a day</h2>
+      <button id="close-modal-btn" class="close-btn">✕</button>
+    </div>
+    <div class="modal-language">
+      <label for="language-select">Language:</label>
+      <select id="language-select"></select>
+    </div>
+    <div class="modal-content" id="help-content">
+      <!-- Loaded from help files -->
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="js/dwd-core.js"></script>
+  <script src="js/dwd-ui.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

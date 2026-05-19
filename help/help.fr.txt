@@ -1,0 +1,36 @@
+Un jour – un mot – un jour
+
+Qu'est-ce que c'est ?
+Écrivez un mot par jour. Pas d'édition. Pas de suppression. Chaque mot est permanent.
+
+Couleurs :
+Chaque mot a sa propre couleur. Comment ? C'est le mystère.
+
+Boutons :
+📅 Calendrier - Choisissez une date. Si vous n'avez pas écrit de mot ce jour-là,
+           saute au prochain jour qui a un mot.
+📂⬇️ Importer - Restaure les mots depuis une sauvegarde JSON.
+           ATTENTION : Cela REMPLACE tout ce qui se trouve actuellement dans votre journal.
+           Les mots absents du fichier de sauvegarde seront perdus à jamais.
+💾⬆️ Exporter - Télécharge tous les mots en JSON.
+           Faites-le régulièrement. Votre journal vit uniquement dans votre navigateur.
+🏠 Aujourd'hui - Retour à aujourd'hui.
+❓ Aide - Ouvre cette fenêtre d'aide.
+
+Boutons d'historique (10, 20, 50, 100, 200, ∞) :
+Affiche les mots passés. L'arrière-plan devient la couleur moyenne de ces mots.
+Une bande colorée montre la chronologie.
+
+Barre du bas :
+Les 5 derniers mots. Cliquez pour accéder à ce mot.
+
+Philosophie :
+Une fois écrit, cela reste. On réfléchit avant d'écrire.
+Exportez votre journal souvent. Les navigateurs oublient. Les ordinateurs tombent en panne.
+Les choses se perdent. C'est la vie.
+
+Technique :
+Toutes les données restent dans votre navigateur. Pas de cloud, pas de suivi, pas de connexion.
+ATTENTION : Effacer les données de votre navigateur supprimera votre journal.
+ATTENTION : Importer un fichier JSON écrase tout.
+Exportez régulièrement. Conservez des sauvegardes à différents endroits.

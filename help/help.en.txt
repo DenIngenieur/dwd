@@ -1,0 +1,36 @@
+A Day A Word A Day
+
+What is this?
+Write one word per day. No editing. No deleting. Each word is permanent.
+
+Colors:
+Each word has its own color. How? That is the mystery.
+
+Buttons:
+📅 Calendar - Pick a date. If you never wrote a word on that day,
+           it jumps to the next day that has a word.
+📂⬇️ Import - Restores entries from a JSON backup.
+           WARNING: This REPLACES everything currently in your diary.
+           Any entries not in the backup file will be lost forever.
+💾⬆️ Export - Downloads all entries as JSON.
+           Do this regularly. Your diary lives only in your browser.
+🏠 Today - Return to today.
+❓ Help - Opens this help window.
+
+History buttons (10, 20, 50, 100, 200, ∞):
+Show past entries. The background becomes the average color of those entries.
+A colored stripe shows the timeline.
+
+Bottom bar:
+Last 5 entries. Click to jump to that word.
+
+Philosophy:
+Once written, it stays. You think before you write.
+Export your diary often. Browsers forget. Computers break.
+Things get lost. This is life.
+
+Technical:
+All data stays in your browser. No cloud, no tracking, no login.
+WARNING: Clearing your browser data deletes your diary.
+WARNING: Importing a JSON file overwrites everything.
+Export regularly. Keep backups in different places.

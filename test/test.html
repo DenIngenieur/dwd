@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DWD - Color Algorithm Test</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: monospace;
+      background: #f5f5f5;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .test-panel {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 0.75rem;
+      font-size: 1.2rem;
+      font-family: monospace;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .input-group select, .input-group button {
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .input-group button:hover {
+      background: #e0e0e0;
+    }
+
+    .result {
+      background: #f0f0f0;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .color-swatch {
+      width: 80px;
+      height: 80px;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      border: 2px solid #ddd;
+    }
+
+    .details {
+      font-size: 0.85rem;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .edge-cases {
+      margin-top: 1.5rem;
+    }
+
+    .edge-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .edge-btn {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .edge-btn:hover {
+      background: #ccc;
+    }
+
+    .batch-section {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ddd;
+    }
+
+    .batch-section textarea {
+      width: 100%;
+      height: 120px;
+      font-family: monospace;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.4rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>DWD Color Algorithm Test</h1>
+
+  <!-- Single word test -->
+  <div class="test-panel">
+    <h2>Single Word Test</h2>
+    <div class="input-group">
+      <input type="text" id="test-word" placeholder="Enter any word..." value="rain">
+      <select id="force-space">
+        <option value="auto">Auto (random)</option>
+        <option value="RGB">Force RGB</option>
+        <option value="HSL">Force HSL</option>
+        <option value="LAB">Force LAB</option>
+        <option value="YUV">Force YUV</option>
+        <option value="YIQ">Force YIQ</option>
+      </select>
+      <button id="generate-btn">Generate</button>
+    </div>
+
+    <div id="single-result" class="result">
+      <!-- Results appear here -->
+    </div>
+  </div>
+
+  <!-- Edge Cases -->
+  <div class="test-panel">
+    <h2>Edge Cases</h2>
+    <div class="edge-buttons" id="edge-buttons"></div>
+    <div id="edge-result" class="details" style="margin-top: 1rem; overflow-x: auto;"></div>
+  </div>
+
+  <!-- Batch Test -->
+  <div class="test-panel">
+    <h2>Batch Test</h2>
+    <div class="batch-section">
+      <textarea id="batch-words" placeholder="One word per line..."></textarea>
+      <button id="batch-btn">Run Batch Test</button>
+    </div>
+    <div id="batch-result" style="margin-top: 1rem; overflow-x: auto;"></div>
+  </div>
+</div>
+
+<script src="../js/dwd-core.js"></script>
+<script>
+  // Initialize calculator
+  const strategies = [
+    new RgbStrategy(),
+    new HslStrategy(),
+    new LabStrategy(),
+    new YuvStrategy(),
+    new YiqStrategy()
+  ];
+  const calculator = new ColorCalculator(strategies);
+  const grouper = new WordGrouper();
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // Render single result
+  function renderResult(word, result, forcedSpace) {
+    const hsl = result.hsl;
+    const bgColor = `hsl(${hsl.hue}, ${hsl.saturation}%, ${hsl.lightness}%)`;
+    const rgb = hsl.toRgb();
+
+    let groupsHtml = '';
+    if (result.groups) {
+      groupsHtml = `
+        <strong>Grouping rule:</strong> ${result.groups.rule}<br>
+        <strong>Sums:</strong> [${result.groups.sums.join(', ')}]<br>
+      `;
+    }
+
+    return `
+      <div class="color-swatch" style="background: ${bgColor};"></div>
+      <div class="details">
+        <strong>Word:</strong> ${escapeHtml(word)}<br>
+        <strong>Word length:</strong> ${word.length}<br>
+        <strong>Color space:</strong> ${result.spaceUsed} ${forcedSpace ? '(forced)' : '(random)'}<br>
+        <strong>HSL:</strong> ${hsl.hue}°, ${hsl.saturation}%, ${hsl.lightness}%<br>
+        <strong>RGB:</strong> ${rgb.r}, ${rgb.g}, ${rgb.b}<br>
+        ${groupsHtml}
+      </div>
+    `;
+  }
+
+  // Generate and display single word
+  function generate() {
+    const wordInput = document.getElementById('test-word');
+    const forceSelect = document.getElementById('force-space');
+    const resultDiv = document.getElementById('single-result');
+
+    let word = wordInput.value.trim();
+    if (word === '') {
+      resultDiv.innerHTML = '<div class="details">Please enter a word.</div>';
+      return;
+    }
+
+    const forceValue = forceSelect.value;
+    let result;
+    if (forceValue === 'auto') {
+      result = calculator.calculate(word);
+    } else {
+      let strategy;
+      switch (forceValue) {
+        case 'RGB': strategy = new RgbStrategy(); break;
+        case 'HSL': strategy = new HslStrategy(); break;
+        case 'LAB': strategy = new LabStrategy(); break;
+        case 'YUV': strategy = new YuvStrategy(); break;
+        case 'YIQ': strategy = new YiqStrategy(); break;
+        default: strategy = null;
+      }
+      if (strategy) {
+        result = calculator.calculateWithSpace(word, strategy);
+      } else {
+        result = calculator.calculate(word);
+      }
+    }
+
+    resultDiv.innerHTML = renderResult(word, result, forceValue !== 'auto');
+  }
+
+  // Edge cases list
+  const edgeCases = [
+    { word: "a", desc: "1 letter (should be gray)" },
+    { word: "ab", desc: "2 letters (special grouping)" },
+    { word: "abc", desc: "3 letters (equal groups)" },
+    { word: "abcd", desc: "4 letters (overlap)" },
+    { word: "abcde", desc: "5 letters (overlap)" },
+    { word: "abcdef", desc: "6 letters (equal groups)" },
+    { word: "abcdefg", desc: "7 letters (overlap)" },
+    { word: "abcdefgh", desc: "8 letters (overlap)" },
+    { word: "abcdefghi", desc: "9 letters (equal groups)" },
+    { word: "你好", desc: "Chinese 2 chars" },
+    { word: "مرحبا", desc: "Arabic" },
+    { word: "Привет", desc: "Cyrillic" }
+  ];
+
+  // Run all edge cases
+  function runEdgeCases() {
+    let html = '<table>';
+    html += '<thead><tr><th>Word</th><th>Description</th><th>Length</th><th>Space</th><th>HSL</th><th>Rule</th><th>Color</th></tr></thead><tbody>';
+
+    for (const ec of edgeCases) {
+      const result = calculator.calculate(ec.word);
+      const hsl = result.hsl;
+      const bgColor = `hsl(${hsl.hue}, ${hsl.saturation}%, ${hsl.lightness}%)`;
+      html += `
+        <tr>
+          <td>${escapeHtml(ec.word)}</td>
+          <td>${escapeHtml(ec.desc)}</td>
+          <td>${ec.word.length}</td>
+          <td>${result.spaceUsed}</td>
+          <td>${hsl.hue}°, ${hsl.saturation}%, ${hsl.lightness}%</td>
+          <td>${result.groups ? result.groups.rule : 'unknown'}</td>
+          <td style="background: ${bgColor}; width: 40px;"></td>
+        </tr>
+      `;
+    }
+
+    html += '</tbody></table>';
+    document.getElementById('edge-result').innerHTML = html;
+  }
+
+  // Batch test
+  function runBatch() {
+    const textarea = document.getElementById('batch-words');
+    const lines = textarea.value.split(/\r?\n/);
+    const results = [];
+    for (const line of lines) {
+      const word = line.trim();
+      if (word === '') continue;
+      const result = calculator.calculate(word);
+      results.push({
+        word: word,
+        hsl: result.hsl,
+        space: result.spaceUsed
+      });
+    }
+
+    if (results.length === 0) {
+      document.getElementById('batch-result').innerHTML = '<div class="details">No words to test.</div>';
+      return;
+    }
+
+    let html = '<table><thead><tr><th>Word</th><th>Space</th><th>HSL</th><th>Color</th></tr></thead><tbody>';
+    for (const r of results) {
+      const bg = `hsl(${r.hsl.hue}, ${r.hsl.saturation}%, ${r.hsl.lightness}%)`;
+      html += `
+        <tr>
+          <td>${escapeHtml(r.word)}</td>
+          <td>${r.space}</td>
+          <td>${r.hsl.hue}°, ${r.hsl.saturation}%, ${r.hsl.lightness}%</td>
+          <td style="background: ${bg}; width: 40px;"></td>
+        </tr>
+      `;
+    }
+    html += '</tbody></table>';
+    document.getElementById('batch-result').innerHTML = html;
+  }
+
+  // Populate edge buttons
+  function populateEdgeButtons() {
+    const container = document.getElementById('edge-buttons');
+    for (const ec of edgeCases) {
+      const btn = document.createElement('button');
+      btn.className = 'edge-btn';
+      btn.textContent = ec.word;
+      btn.title = ec.desc;
+      btn.addEventListener('click', () => {
+        document.getElementById('test-word').value = ec.word;
+        generate();
+      });
+      container.appendChild(btn);
+    }
+    const runAllBtn = document.createElement('button');
+    runAllBtn.className = 'edge-btn';
+    runAllBtn.textContent = 'Run All Edge Cases';
+    runAllBtn.style.background = '#4CAF50';
+    runAllBtn.style.color = 'white';
+    runAllBtn.addEventListener('click', runEdgeCases);
+    container.appendChild(runAllBtn);
+  }
+
+  // Initialize
+  function init() {
+    populateEdgeButtons();
+    document.getElementById('generate-btn').addEventListener('click', generate);
+    document.getElementById('batch-btn').addEventListener('click', runBatch);
+    document.getElementById('batch-words').value = 'rain\ncoffee\nsleep\nsun\nmoon\nstar\ncloud\nwater\nfire\nearth';
+    generate();
+  }
+
+  init();
+</script>
+</body>
+</html>
