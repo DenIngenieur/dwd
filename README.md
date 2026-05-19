@@ -30,7 +30,7 @@ Elk woord heeft zijn eigen kleur. Hoe? Dat is het mysterie.
 | 🏠 Vandaag | Terug naar vandaag. |
 | ❓ Help | Opent het helpvenster. |
 
-## Geschiedknoppen (10, 20, 50, 100, 200, ∞)
+## Geschiedenis knoppen (10, 20, 50, 100, 200, ∞)
 
 Toont eerdere woorden. De achtergrond wordt de gemiddelde kleur van die woorden. Een gekleurde balk toont de tijdlijn.
 
