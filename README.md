@@ -28,7 +28,7 @@ Elk woord heeft zijn eigen kleur. Hoe? Dat is het mysterie.
 | 📂⬇️ Importeren | Herstelt woorden uit een JSON-back-up. **WAARSCHUWING:** Dit VERVANGT alles wat momenteel in je dagboek staat. Woorden die niet in het back-upbestand staan, zijn voor altijd verloren. |
 | 💾⬆️ Exporteren | Download alle woorden als JSON. Doe dit regelmatig. Je dagboek leeft alleen in je browser. |
 | 🏠 Vandaag | Terug naar vandaag. |
-| ❓ Help | Opent dit helpvenster. |
+| ❓ Help | Opent het helpvenster. |
 
 ## Geschiedknoppen (10, 20, 50, 100, 200, ∞)
 
